@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Web Page</title>
+<style>
+    #imageContainer {
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #imageContainer img {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity 2.0s ease-in-out;
+    }
+
+    #videoContainer {
+        margin-top: 20px;
+    }
+
+    #textContainer {
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    #resizableDiv {
+        width: 300px;
+        height: 200px;
+        background-color: lightgray;
+        resize: both;
+        overflow: auto;
+    }
+</style>
+</head>
+<body>
+
+<div id="imageContainer">
+    <img src="ii_believe_in_dwarkadish_ii-19082022-0001-01.jpeg" alt="Image 1">
+</div>
+
+<div id="videoContainer">
+    <select id="videoSelect">
+        <option value="video1.mp4">Video 1</option>
+        <option value="video2.mp4">Video 2</option>
+    </select>
+    <br>
+    <button id="playVideoBtn">Play Video</button>
+</div>
+
+<div id="textContainer">
+    <span id="animatedText">Animated Text</span>
+</div>
+
+<div id="resizableDiv" contenteditable="true">
+    Resize this div
+</div>
+
+<button id="hideShowBtn">Hide/Show</button>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        setInterval(function() {
+            $("#imageContainer img").fadeTo(2000, 0.3).fadeTo(2000, 1);
+        }, 4000);
+
+        $("#playVideoBtn").click(function() {
+            var selectedVideo = $("#videoSelect").val();
+            var videoPlayer = $("<video controls></video>").attr("src", selectedVideo);
+            $("#videoContainer").append(videoPlayer);
+        });
+
+        var fontSize = 16;
+        var increasing = true;
+        setInterval(function() {
+            if (fontSize >= 24) {
+                increasing = false;
+            } else if (fontSize <= 16) {
+                increasing = true;
+            }
+            if (increasing) {
+                fontSize++;
+            } else {
+                fontSize--;
+            }
+            $("#animatedText").css("font-size", fontSize + "px");
+        }, 500);
+
+        $("#hideShowBtn").click(function() {
+            $("#resizableDiv").toggle();
+        });
+    });
+</script>
+</body>
+</html>
